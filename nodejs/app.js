@@ -1,6 +1,50 @@
 const express = require('express')
 const path = require('path')
+const fs = require('fs')
 const app = express()
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+
+// Parse command line arguments
+const argv = yargs(hideBin(process.argv))
+  .option('org', {
+    alias: 'organization',
+    description: 'GitHub organization name',
+    type: 'string',
+    demandOption: true
+  })
+  .option('baseUrl', {
+    description: 'GitHub base URL',
+    type: 'string',
+    demandOption: true
+  })
+  .option('apiUrl', {
+    description: 'GitHub API URL',
+    type: 'string',
+    demandOption: true
+  })
+  .help()
+  .alias('help', 'h')
+  .argv
+
+// Create environments.json with command line arguments
+const environmentsData = {
+  baseUrl: argv.baseUrl,
+  apiUrl: argv.apiUrl,
+  environments: [argv.org]
+}
+
+// Write environments.json file
+fs.writeFileSync(
+  path.join(__dirname, '..', 'html', 'environments.json'),
+  JSON.stringify(environmentsData, null, 4),
+  'utf8'
+)
+
+console.log(`Configuration set:`)
+console.log(`- Organization: ${argv.org}`)
+console.log(`- Base URL: ${argv.baseUrl}`)
+console.log(`- API URL: ${argv.apiUrl}`)
 
 // Static Middleware
 let staticDirectory = __dirname + '/public';

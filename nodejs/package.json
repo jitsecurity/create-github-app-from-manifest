@@ -1,6 +1,14 @@
 {
+  "name": "github-app-creator",
+  "version": "1.0.0",
+  "description": "Create GitHub apps from a manifest",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "ejs": "^3.1.7",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "yargs": "^17.7.2"
   }
 }

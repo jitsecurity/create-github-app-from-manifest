@@ -1,6 +1,6 @@
 {
-    "name": "Jit PR Agent <organization name>",
-    "url": " https://jit.io",
+    "name": "Jit AppSec Agent",
+    "url": "https://jit.io",
     "hook_attributes": {
         "url": "https://example.com/github/events"
     },
@@ -15,7 +15,7 @@
         "organization_administration": "read",
         "checks": "write",
         "contents": "write",
-        "deployments": "write",
+        "deployments": "read",
         "issues": "write",
         "metadata": "read",
         "pull_requests": "write",
@@ -26,5 +26,6 @@
         "emails": "read"
     },
     "default_events": [
+        "repository"
     ]
 }

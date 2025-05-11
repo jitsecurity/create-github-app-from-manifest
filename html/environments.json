@@ -1,8 +1,7 @@
 {
-    "baseUrl": "https://github.com",
-    "apiUrl": "https://api.github.com",
-    "environments":
-    [
-        "pr-agent-dups2"
+    "baseUrl": "https://ghe.rocket.jitdev.io",
+    "apiUrl": "https://ghe.rocket.jitdev.io/api/v3",
+    "environments": [
+        "rocket-testing"
     ]
 }
