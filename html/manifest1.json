@@ -1,6 +1,6 @@
 {
     "name": "Jit PR Agent <organization name>",
-    "url": "https://www.example.com",
+    "url": " https://jit.io",
     "hook_attributes": {
         "url": "https://example.com/github/events"
     },
