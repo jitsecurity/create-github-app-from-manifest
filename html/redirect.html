@@ -1,36 +1,190 @@
-<script type="text/javascript" src="script.js"></script>
-<script lang="javascript" async>
-    loadRedirectPageInfo();
-</script>
-
-<br/ >
-<br/ >
-<br/ >
-<div id="waiting" style="font-weight: 600;">Give us a second to retrieve the information</div>
-<br/ >
-<br/ >
-
-<table>
-    <tr>
-        <td>Name:</td> <td><label id="name"></label><br/></td>
-    </tr>
-    <tr> 
-        <td>AppId:</td> <td><label id="appId"></label><br/></td>
-    </tr>
-    <tr>
-        <td style="vertical-align: top;">PEM Key: </td>
-        <td>
-            <textarea id="pemKey" style="height: 425; width: 500; word-break: break-word;"></textarea>
-        </td>
-    </tr>
-</table>
-<br />
-<div style="font-weight: 600;">
-    Store this data somewhere safe!
-</div>
-<br /><br /><br /><br />
-
-Click here to install the app in the organization: 
-<button type=“button” style="height: 30px;">
-    <a href="" id="installLink" target="_blank" style="margin: 11px;">Install</a>
-</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub App Created</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #ffffff;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .app-info {
+            margin-bottom: 2rem;
+        }
+        
+        #waiting {
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--light-gray);
+            border-radius: 0.375rem;
+            text-align: center;
+        }
+        
+        .info-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-table td {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .info-table td:first-child {
+            font-weight: 500;
+            width: 120px;
+            color: var(--gray);
+        }
+        
+        label {
+            font-weight: 500;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.375rem;
+            font-family: monospace;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            min-height: 350px;
+            resize: vertical;
+        }
+        
+        .message {
+            font-weight: 600;
+            color: var(--danger);
+            margin: 1.5rem 0;
+        }
+        
+        .install-section {
+            margin-top: 2rem;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background-color 0.15s ease-in-out;
+        }
+        
+        .button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            textarea {
+                min-height: 250px;
+            }
+            
+            .info-table td:first-child {
+                width: 90px;
+            }
+        }
+    </style>
+    <script type="text/javascript" src="script.js"></script>
+    <script lang="javascript" async>
+        loadRedirectPageInfo();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>GitHub App Created</h1>
+        </header>
+        
+        <div id="waiting">Give us a second to retrieve the information...</div>
+        
+        <div class="app-info">
+            <table class="info-table">
+                <tr>
+                    <td>Name:</td>
+                    <td><label id="name"></label></td>
+                </tr>
+                <tr> 
+                    <td>App ID:</td>
+                    <td><label id="appId"></label></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top;">PEM Key:</td>
+                    <td>
+                        <textarea id="pemKey"></textarea>
+                    </td>
+                </tr>
+            </table>
+            
+            <div class="message">
+                Store this data somewhere safe!
+            </div>
+        </div>
+        
+        <div class="install-section">
+            <p>Click the button below to install the app in your organization:</p>
+            <a href="" id="installLink" target="_blank" class="button">Install App</a>
+        </div>
+    </div>
+</body>
+</html>
