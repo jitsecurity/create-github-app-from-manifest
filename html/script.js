@@ -1,6 +1,50 @@
 function updateFormUrl() {
-    environment = document.getElementById("environment").value
-    document.getElementById("form").action = baseUrl + "/organizations/" + environment + "/settings/apps/new?state=newlycreated"
+    try {
+        // Check if baseUrl is defined
+        if (!baseUrl) {
+            console.error("Base URL not set, unable to update form action");
+            return;
+        }
+        
+        // Get the selected environment
+        const environmentSelect = document.getElementById("environment");
+        if (!environmentSelect) {
+            console.error("Environment select element not found");
+            return;
+        }
+        
+        const environment = environmentSelect.value;
+        if (!environment) {
+            console.error("No environment selected");
+            return;
+        }
+        
+        // Construct the action URL
+        const actionUrl = baseUrl + "/organizations/" + environment + "/settings/apps/new?state=newlycreated";
+        console.log("Setting form action URL to:", actionUrl);
+        
+        // Set the form action
+        const form = document.getElementById("form");
+        if (form) {
+            form.action = actionUrl;
+            console.log("Form action set successfully to:", form.action);
+            
+            // Update debug display if it exists
+            const currentAction = document.getElementById("currentAction");
+            if (currentAction) {
+                currentAction.innerText = actionUrl;
+            }
+            
+            const selectedEnv = document.getElementById("selectedEnv");
+            if (selectedEnv) {
+                selectedEnv.innerText = environment;
+            }
+        } else {
+            console.error("Form element not found");
+        }
+    } catch (error) {
+        console.error("Error in updateFormUrl:", error);
+    }
 }
 
 function loadFile(url, isJson, callback) {
@@ -48,40 +92,71 @@ async function getSettings() {
 }
 
 function loadEnvironments() {
-    fileLocation = "environments.json"
-    settings = loadFile(fileLocation, false, function(response) {
-        //console.log('found file with content' + response);
-
-        json = JSON.parse(response);
-        baseUrl = json.baseUrl
-
-        envSelect = document.getElementById("environment")
-        if (envSelect) {
-            for(var i = 0; i < json.environments.length; i++) {
-                environment = json.environments[i]
+    console.log("Loading environments...");
+    
+    const fileLocation = "environments.json";
+    loadFile(fileLocation, false, function(response) {
+        console.log('Environments file loaded, content length:', response.length);
+        
+        try {
+            const json = JSON.parse(response);
+            console.log('Parsed environments:', json.environments);
+            
+            // Set the global baseUrl variable
+            baseUrl = json.baseUrl;
+            console.log('Base URL set to:', baseUrl);
+            
+            const envSelect = document.getElementById("environment");
+            if (envSelect) {
+                // Clear existing options first
+                envSelect.innerHTML = '';
                 
-                option = document.createElement("option")
-                option.value = environment
-                option.innerHTML = environment
-                envSelect.appendChild(option)
+                // Add options for each environment
+                if (json.environments && json.environments.length > 0) {
+                    for(let i = 0; i < json.environments.length; i++) {
+                        const environment = json.environments[i];
+                        
+                        const option = document.createElement("option");
+                        option.value = environment;
+                        option.innerHTML = environment;
+                        envSelect.appendChild(option);
+                        
+                        console.log('Added environment option:', environment);
+                    }
+                    
+                    // Select the first option by default
+                    if (envSelect.options.length > 0) {
+                        envSelect.selectedIndex = 0;
+                    }
+                    
+                    // Make sure we have set the postback url
+                    console.log('Updating form URL after loading environments');
+                    setTimeout(updateFormUrl, 100);
+                } else {
+                    console.error('No environments found in JSON file');
+                    // Add a default option
+                    const option = document.createElement("option");
+                    option.value = "YOUR_GITHUB_USERNAME";
+                    option.innerHTML = "Replace with your GitHub username";
+                    envSelect.appendChild(option);
+                }
+            } else {
+                console.error('Environment select element not found');
             }
-             // make sure we have set the postback url:
-            updateFormUrl(); 
+        } catch (error) {
+            console.error('Error parsing environments JSON:', error);
         }
-
-        return { baseUrl: json.baseUrl, apiUrl: json.apiUrl }
     });
-
-    return settings
 }
 
 function initPage() {
-    loadEnvironments()
+    // Load environments first
+    loadEnvironments();
 
     // load the manifest
     jsonFileToUrl = "manifest1.json"
     loadFile(jsonFileToUrl, false, function(response) {
-        //console.log('found file with content' + response);
+        console.log('Loading manifest from:', jsonFileToUrl);
         
         // remove everything behind the last "/""
         url = window.location.href
@@ -91,11 +166,23 @@ function initPage() {
 
         // replace the parameter in the manifest
         manifest = response.replace(/__redirectUrl__/g, redirectUrl);
-        manifest = JSON.parse(manifest)
-
-        // show the manifest on the page
-        input = document.getElementById("manifest")
-        input.value = JSON.stringify(manifest, null, 2)
+        
+        // Parse it to ensure it's valid JSON
+        try {
+            const manifestObj = JSON.parse(manifest);
+            
+            // Format it nicely and set the value
+            input = document.getElementById("manifest")
+            input.value = JSON.stringify(manifestObj, null, 2);
+            
+            // Make sure we update the form URL again after manifest is loaded
+            setTimeout(updateFormUrl, 500);
+            
+            console.log('Manifest loaded successfully');
+        } catch (error) {
+            console.error('Error parsing manifest:', error);
+            alert('Error loading manifest: ' + error.message);
+        }
     })
 }
 

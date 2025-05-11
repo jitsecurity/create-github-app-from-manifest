@@ -3,8 +3,6 @@
     "apiUrl": "https://api.github.com",
     "environments":
     [
-        "rajbos-actions-demo",
-        "rajbos-actions",
-        "rajbos"
+        "pr-agent-dups2"
     ]
 }

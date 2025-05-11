@@ -1,19 +1,57 @@
-<br />
-<br />
-<label for="environment">Environment:</label>
-<select id="environment" onchange="updateFormUrl()">   
-</select>
-<br />
-<br />
-
-<form id="form" action="" method="post">
-    Create a GitHub App from this Manifest: <br /> 
-    <textarea cols="100" title="manifest" type="text" name="manifest" id="manifest" style="height: 350; width: 650; word-break: break-word;"></textarea><br />
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create GitHub App</title>
+    <style>
+        #debug {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create GitHub App from Manifest</h1>
     <br />
-    <input type="submit" value="Submit">
-</form>
-   
-<script type="text/javascript" src="script.js"></script>
-<script type="text/javascript">
-  initPage();
-</script>
+    <label for="environment">GitHub Organization/Username:</label>
+    <select id="environment" onchange="updateFormUrl()">   
+    </select>
+    <br />
+    <br />
+
+    <form id="form" method="post">
+        <p>Create a GitHub App from this Manifest:</p>
+        <textarea cols="100" rows="20" name="manifest" id="manifest" style="height: 350px; width: 650px; word-break: break-word;"></textarea><br />
+        <br />
+        <input type="submit" value="Create GitHub App">
+    </form>
+    
+    <div id="debug">
+        <h3>Debug Info:</h3>
+        <p>Form action: <span id="currentAction"></span></p>
+        <p>Selected environment: <span id="selectedEnv"></span></p>
+    </div>
+       
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+      initPage();
+      
+      // Show debug info
+      document.getElementById('debug').style.display = 'block';
+      
+      // Update debug info
+      function updateDebugInfo() {
+          document.getElementById('currentAction').innerText = document.getElementById('form').action;
+          document.getElementById('selectedEnv').innerText = document.getElementById('environment').value;
+      }
+      
+      // Call it once initially
+      setTimeout(updateDebugInfo, 1000);
+      
+      // And whenever the environment changes
+      document.getElementById('environment').addEventListener('change', updateDebugInfo);
+    </script>
+</body>
+</html>

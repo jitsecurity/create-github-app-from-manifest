@@ -1,5 +1,5 @@
 {
-    "name": "Octoapp",
+    "name": "Jit PR Agent <organization name>",
     "url": "https://www.example.com",
     "hook_attributes": {
         "url": "https://example.com/github/events"
@@ -10,13 +10,21 @@
     ],
     "public": false,
     "default_permissions": {
+        "actions": "write",
+        "administration": "read",
+        "organization_administration": "read",
+        "checks": "write",
+        "contents": "write",
+        "deployments": "write",
         "issues": "write",
-        "checks": "write"
+        "metadata": "read",
+        "pull_requests": "write",
+        "repository_hooks": "write",
+        "workflows": "write",
+        "members": "read",
+        "organization_hooks": "write",
+        "emails": "read"
     },
     "default_events": [
-        "issues",
-        "issue_comment",
-        "check_suite",
-        "check_run"
     ]
 }
