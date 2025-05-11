@@ -2,11 +2,11 @@
     "name": "Jit AppSec Agent",
     "url": "https://jit.io",
     "hook_attributes": {
-        "url": "https://example.com/github/events"
+        "url": "https://pr_agent_base_url/webhook/pr-agent/vendor/github/app/app_id"
     },
     "redirect_url": "__redirectUrl__",
     "callback_urls": [
-        "https://example.com/callback"
+        "https://api.jit.io/oauth/callback/vendor/github/app/<app_id>"
     ],
     "public": false,
     "default_permissions": {
