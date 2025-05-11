@@ -108,33 +108,6 @@
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
         }
         
-        #debug {
-            margin-top: 2.5rem;
-            padding: 1.25rem;
-            background-color: var(--light-gray);
-            border-radius: 0.5rem;
-            border: 1px solid var(--border);
-            display: none;
-        }
-        
-        #debug h3 {
-            margin-bottom: 0.75rem;
-            font-size: 1.125rem;
-            color: var(--dark);
-        }
-        
-        #debug p {
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--gray);
-        }
-        
-        #debug span {
-            word-break: break-all;
-            color: var(--dark);
-            font-family: monospace;
-        }
-        
         @media (max-width: 768px) {
             .container {
                 padding: 1.5rem;
@@ -169,32 +142,11 @@
             
             <button type="submit" class="button">Create GitHub App</button>
         </form>
-        
-        <div id="debug">
-            <h3>Debug Info:</h3>
-            <p>Form action: <span id="currentAction"></span></p>
-            <p>Selected environment: <span id="selectedEnv"></span></p>
-        </div>
     </div>
     
     <script type="text/javascript" src="script.js"></script>
     <script type="text/javascript">
       initPage();
-      
-      // Show debug info
-      document.getElementById('debug').style.display = 'block';
-      
-      // Update debug info
-      function updateDebugInfo() {
-          document.getElementById('currentAction').innerText = document.getElementById('form').action;
-          document.getElementById('selectedEnv').innerText = document.getElementById('environment').value;
-      }
-      
-      // Call it once initially
-      setTimeout(updateDebugInfo, 1000);
-      
-      // And whenever the environment changes
-      document.getElementById('environment').addEventListener('change', updateDebugInfo);
     </script>
 </body>
 </html>
